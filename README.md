@@ -4,7 +4,7 @@
 
 Second Brain is an Obsidian companion that helps you make sense of thoughts collected over time. Give it notes, diary entries or AI conversations; it helps organize them by project, finds meaningful connections and turns the material into useful documents—without replacing your original writing.
 
-[English](README.md) · [Русский](README.ru.md) · [Español](README.es.md) · [Українська](README.uk.md)
+[English](second-brain/README.md) · [Русский](second-brain/README.ru.md) · [Español](second-brain/README.es.md) · [Українська](second-brain/README.uk.md)
 
 ---
 
@@ -72,7 +72,7 @@ Model output is not guaranteed to be correct. Review generated documents, especi
 
 ## Documentation
 
-The Python engine handles processing and model calls; the Obsidian plugin provides the interface. The [technical specification](SPECIFICATION.en.md) explains the pipeline, formats, prompts and design decisions in detail. The user guide in each distribution covers setup and day-to-day use.
+The Python engine handles processing and model calls; the Obsidian plugin provides the interface. The [technical specification](second-brain/SPECIFICATION.en.md) explains the pipeline, formats, prompts and design decisions in detail. The user guide in each distribution covers setup and day-to-day use.
 
 ---
 
