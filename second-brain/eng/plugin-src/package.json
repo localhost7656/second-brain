@@ -1,0 +1,19 @@
+{
+  "name": "vtoroy-mozg",
+  "author": "localhost7656",
+  "license": "Apache-2.0",
+  "version": "2.7.1",
+  "description": "Obsidian-plugin «Second Brain»",
+  "scripts": {
+    "check": "tsc --noEmit -p .",
+    "build": "tsc --noEmit -p . && node esbuild.config.mjs"
+  },
+  "devDependencies": {
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.13",
+    "@types/node": "^26.6.6",
+    "esbuild": "^0.28.2",
+    "obsidian": "^1.14.4",
+    "typescript": "^7.0.2"
+  }
+}

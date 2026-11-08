@@ -1,0 +1,104 @@
+# Second Brain settings. You can also change these in Obsidian:
+# Settings → Second Brain. This file is in the program folder, not the vault.
+# Text after # is explanatory and is ignored by the program.
+
+# Obsidian vault folder, filled in by Install.bat. The plugin uses the open vault;
+# this line is needed only for command-line use. Forward slashes are supported.
+vault: ""
+
+llm:
+  mode: "cloud"   # cloud — provider API; local — local server (llama.cpp); webchat — manual web chat
+  cloud_profile: "p1"   # cloud profile ID from profiles
+  local_profile: ""   # local profile ID from profiles
+  profiles:            # model profiles. Prices are dollars per million tokens; leave empty to omit cost calculation
+    - id: "p1"
+      name: "Z.ai"
+      kind: "cloud"
+      base_url: "https://api.z.ai/api/paas/v4"   # OpenAI-compatible address
+      model: ""   # exact model name from the provider — enter before the first run
+      api_key_file: "api_key.txt"   # key file in the program folder, outside the vault
+      temperature: 0.2
+      max_tokens:   # response length limit; empty uses the provider default
+      json_mode: false   # true — if the server can response_format: json_object
+      extra: {}   # extra request parameters, for example {"thinking": {"type": "disabled"}} for GLM
+      timeout_sec: 600   # response timeout in seconds
+      max_input_chars: 300000   # request limit in characters; longer material is split
+      prices: {"input": null, "cached_input": null, "output": null}   # input, cached input, output — dollars per million tokens
+      budget_month:   # monthly profile limit, dollars
+  webchat: {"max_input_chars": 300000}   # manual web chat request limit, characters
+  roles: {}            # profiles for individual steps, example: {"Synthesis": "p2", "Questions": "webchat"}
+  max_format_retries: 2   # maximum retries when the response format is invalid
+
+embeddings:
+  mode: "local"   # local — this computer (llama.cpp); cloud — cloud embeddings
+  base_url: "http://127.0.0.1:8081/v1"   # server address; the plugin Start model… button fills it in
+  model: "KaLM-Embedding-Gemma3-12B-2511"   # server model name; changing it recalculates all vectors
+  api_key_file: "embeddings_api_key.txt"   # required only when mode is cloud
+  batch: 16   # texts per request
+  max_chars: 6000   # longer text is truncated for search; the entry remains unchanged
+  timeout_sec: 600
+  price_input:   # cloud embeddings: dollars per million tokens
+  server:              # local llama.cpp model: Settings → Second Brain → Models → Start model…
+    device: "cpu"   # cpu — processor; gpu — graphics card
+    build: "auto"   # llama.cpp GPU build: auto chooses CUDA for NVIDIA, otherwise Vulkan; or select cuda or vulkan
+    gpu_layers: "auto"   # GPU layers: auto fits as many as possible, all loads all 48 layers, or specify a number
+    ctx: 4096   # context length in tokens; a larger context uses more memory (4096: about 8.4 GB; 8192: 9.6 GB)
+    kv_cache: "f16"   # KV cache quantization: f16 | q8_0 | q4_0; has little effect because this model does not keep a KV cache
+    threads: 0   # CPU threads; 0 lets llama.cpp choose
+    port: 8081   # server address: http://127.0.0.1:<port>/v1
+    sleep_min: 15   # unload model after this many idle minutes; 0 disables unloading
+    autostart: true   # automatically start the server when needed, without downloading
+    models_dir: ""   # model folder (6.9 GB); empty uses models in the program folder
+
+budget:                # budget for cloud models
+  monthly_usd:   # monthly dollars across cloud profiles; empty means no budget
+  warn_pct: 80   # warn at this percentage; at 100% ask whether to continue
+
+estimate:              # estimate calls, time, and cost before a large run
+  enabled: true
+  calls: 30   # ask for confirmation if calls exceed this number
+  usd: 0.5   # or estimated cost exceeds this amount in dollars
+  minutes: 10   # or estimated duration exceeds this number of minutes
+
+input:
+  split_by_dates: true   # split dated diary entries into separate records
+
+updates:               # updates from GitHub; repository is set in brain/__init__.py, UPDATE_REPO
+  check_on_start: true   # check for updates when Obsidian starts
+
+thresholds:            # global thresholds; container-specific thresholds are set in YAML or the Container tab
+  classification: 70   # Automatic placement: scale 0–100
+  hint_shift: 15   # Weight of your hint: confidence points added to the option specified by hint:
+  high: 90   # High confidence: scale 0–100
+  mode_guess: 70   # File mode detection: scale 0–100
+  compaction: 60   # Compaction: scale 0–100
+  value_min: 30   # Minimum value: scale 0–100
+  value_primary: 70   # Primary importance: scale 0–100
+  duplicate_similarity: 0.86   # Similarity for duplicate detection: aspect pairs at or above this threshold are shown to the model as possible duplicates
+  neighbor_similarity: 0.88   # Neighbor similarity: when entries in different containers are at least this similar, the program asks whether they are placed correctly
+  pattern_similarity: 0.8   # Similarity for patterns: how close aspects must be for the Patterns command to consider them related
+
+seed_dormancy_days: 90 # ask whether a seed is still relevant after this many days without new thoughts
+
+dialogue_markers:      # markers for dialogue in text files
+  user: ["Me:"]
+  ai: ["AI:"]
+
+sources:               # sources are _staging subfolders (for example _staging/Chat with AI/); compaction_shift lowers the compaction threshold
+  - name: "archive"
+    color: "#94A3B8"
+    compaction_shift: 0
+  - name: "note"
+    color: "#60A5FA"
+    compaction_shift: 0
+  - name: "Chat with AI"
+    color: "#A78BFA"
+    compaction_shift: 20
+
+style:                 # Phase 2 document style; override using container style or document style_override in YAML
+  global: "Write clearly and concisely in the language of the source material. Preserve the author's meaning and important details."
+
+limits:                # model request limits; usually no change is needed
+  max_containers_in_prompt: 150   # containers in the classification request
+  max_items_per_value_call: 400   # items per value assessment
+  max_questions_per_entity: 3     # clarifying questions per entry

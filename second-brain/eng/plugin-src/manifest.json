@@ -1,0 +1,9 @@
+{
+  "id": "vtoroy-mozg",
+  "name": "Second Brain",
+  "version": "2.7.1",
+  "minAppVersion": "1.5.0",
+  "description": "Program panel «Second Brain»: note-booking, questions, threshold, document.",
+  "author": "localhost7656",
+  "isDesktopOnly": true
+}
