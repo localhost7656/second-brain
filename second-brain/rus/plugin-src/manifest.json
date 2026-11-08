@@ -1,0 +1,9 @@
+{
+  "id": "vtoroy-mozg",
+  "name": "Второй мозг",
+  "version": "2.7.1",
+  "minAppVersion": "1.5.0",
+  "description": "Панель программы «Второй мозг»: раскладка заметок по контейнерам, вопросы, пороги, документы.",
+  "author": "localhost7656",
+  "isDesktopOnly": true
+}
